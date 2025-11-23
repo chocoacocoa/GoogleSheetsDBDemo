@@ -21,6 +21,8 @@
             <input type="text" placeholder="Grade" name="grade" id="grade">
             <label for="ID">ID</label>
             <input type="text" placeholder="ID" name="ID" id="id">
+            <label for="facecard">IMAGE</label>
+            <input type="text" placeholder="your image link" id="facecard" name="facecard">
             <br>
             <button onclick="submission()">Submit</button>
             </form>
@@ -34,7 +36,8 @@
     </footer>
 </body>
 <script>
-    const sourceDb = "https://name-BookSeeker-P11.onrender.com/api/data";
+    const sourceDb = "http://localhost:3000/api/data";
+    const sourceDbPost = "http://localhost:3000/api/send"
     fetch(sourceDb)
     .then(response => response.json())
     .then(data => {
@@ -50,7 +53,7 @@
         const mainDiv = document.getElementById("mainDiv");
         const jsonString = JSON.stringify(objects);
         for(let i = 0; i<objects.length; i++){
-            mainDiv.innerHTML += `<fieldset style="display: flex; justify-content: center; align-items: center"><br><img src="${objects[i].facecard}" alt="facecard.png"><h1>NAME: ${objects[i].name}<br>GRADE: ${objects[i].grade}<br>SECTION: ${objects[i].ID}</h1></fieldset>`;
+            mainDiv.innerHTML += `<fieldset style="display: flex; justify-content: center; align-items: center"><br><img src="${objects[i].facecard}" alt="facecard.png" style="max-width: 40vmin;"><h1>NAME: ${objects[i].name}<br>GRADE: ${objects[i].grade}<br>ID: ${objects[i].aydi}</h1></fieldset>`;
         }
     })
     .catch(error => console.error(error));
@@ -62,9 +65,10 @@
         const name = document.getElementById("name").value;
         const grade = document.getElementById("grade").value;
         const id = document.getElementById("id").value; 
+        const facecard = document.getElementById("facecard").value;
         console.log(name);
-
-    fetch("https://name-BookSeeker-P11.onrender.com/api/send", {
+        console.log(facecard);
+    fetch(sourceDbPost, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -72,7 +76,8 @@
         body: JSON.stringify({
             name: `${name}`,
             grade: `${grade}`,
-            section: `${id}`
+            aydi: `${id}`,
+            facecard: `${facecard}`
         })
     })
     .then(response => response.json())

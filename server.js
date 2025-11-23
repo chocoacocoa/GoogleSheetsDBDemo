@@ -8,7 +8,7 @@ app.use(express.static("public"));
 // Proxy GET request
 app.get("/api/data", async (req, res) => {
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbydqzHiaGOzlg6M_uu6WpI13H64Rqyz5WWIg30HL6DUcDUjjVThSYJwmnDiFMThq2MYVQ/exec");
+    const response = await fetch("https://script.google.com/macros/s/AKfycbzyE7oRxxekzGv7xCP9ZQ5faXyoiZiifTDxgXCQ6u6d--IaueXzX5VRgFQbdsJvTSIYAQ/exec");
     const data = await response.json();
     res.json(data); // send back to frontend
   } catch (err) {
@@ -19,7 +19,7 @@ app.get("/api/data", async (req, res) => {
 // Proxy POST request
 app.post("/api/send", async (req, res) => {
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbydqzHiaGOzlg6M_uu6WpI13H64Rqyz5WWIg30HL6DUcDUjjVThSYJwmnDiFMThq2MYVQ/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbzyE7oRxxekzGv7xCP9ZQ5faXyoiZiifTDxgXCQ6u6d--IaueXzX5VRgFQbdsJvTSIYAQ/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req.body)
