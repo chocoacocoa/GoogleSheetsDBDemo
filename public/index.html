@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wanted</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+</head>
+<body>
+    <header>
+        <h2>list of wanted personnels</h2>
+    </header>
+    <main>
+        <section>
+            <h3>Add yours</h3>
+            <br>
+            <form>
+            <label for="name">NAME</label>
+            <input type="text" placeholder="Name" name="name" id="name">
+            <label for="grade">GRADE AND BLOCK</label>
+            <input type="text" placeholder="Grade" name="grade" id="grade">
+            <label for="ID">ID</label>
+            <input type="text" placeholder="ID" name="ID" id="id">
+            <br>
+            <button onclick="submission()">Submit</button>
+            </form>
+            
+        </section>
+        <div id="mainDiv">
+        </div>
+    </main>
+    <footer>
+        chocoacocoa
+    </footer>
+</body>
+<script>
+    const sourceDb = "http://localhost:3000/api/data";
+    fetch(sourceDb)
+    .then(response => response.json())
+    .then(data => {
+        const headers = data[0];
+        const values = data[1];
+        const objects = data.slice(1).map(row => ({
+            [headers[0]]: row[0],
+            [headers[1]]: row[1],
+            [headers[2]]: row[2],
+            [headers[3]]: row[3]
+        }));
+        console.log(objects[0].facecard);
+        const mainDiv = document.getElementById("mainDiv");
+        const jsonString = JSON.stringify(objects);
+        for(let i = 0; i<objects.length; i++){
+            mainDiv.innerHTML += `<fieldset style="display: flex; justify-content: center; align-items: center"><br><img src="${objects[i].facecard}" alt="facecard.png"><h1>NAME: ${objects[i].name}<br>GRADE: ${objects[i].grade}<br>SECTION: ${objects[i].ID}</h1></fieldset>`;
+        }
+    })
+    .catch(error => console.error(error));
+
+
+    
+
+    function submission(){
+        const name = document.getElementById("name").value;
+        const grade = document.getElementById("grade").value;
+        const id = document.getElementById("id").value; 
+        console.log(name);
+
+    fetch("http://localhost:3000/api/send", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: `${name}`,
+            grade: `${grade}`,
+            section: `${id}`
+        })
+    })
+    .then(response => response.json())
+    //.then(data => console.log("Response:", data))
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+    }
+    
+</script>
+</html>

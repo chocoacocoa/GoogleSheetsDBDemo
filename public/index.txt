@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Google Sheets Data</h1>
+    <button id="load">Load Data</button>
+    <pre id="output"></pre>
+    <script src="script.js"></script>
+</body>
+<script>
+    document.getElementById("load").addEventListener("click", () => {
+  fetch("/api/data")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+    })
+    .catch(err => console.error(err));
+});
+
+</script>
+</html>
