@@ -24,7 +24,7 @@
             <label for="facecard">IMAGE</label>
             <input type="text" placeholder="your image link" id="facecard" name="facecard">
             <br>
-            <button onclick="submission()">Submit</button>
+            <button type="submit">Submit</button>
             </form>
             
         </section>
@@ -36,8 +36,8 @@
     </footer>
 </body>
 <script>
-    const sourceDb = "https://name-bookseeker-p11.onrender.com/api/data";
-    const sourceDbPost = "https://name-bookseeker-p11.onrender.com/api/send"
+    const sourceDb = "/api/data";
+    const sourceDbPost = "/api/send"
     fetch(sourceDb)
     .then(response => response.json())
     .then(data => {
@@ -61,14 +61,15 @@
 
     
 
-    function submission(){
+    document.querySelector("form").addEventListener("submit", function(e) {
+        e.preventDefault();
         const name = document.getElementById("name").value;
         const grade = document.getElementById("grade").value;
         const id = document.getElementById("id").value; 
         const facecard = document.getElementById("facecard").value;
         console.log(name);
         console.log(facecard);
-    fetch(sourceDbPost, {
+        fetch(sourceDbPost, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -84,7 +85,11 @@
     //.then(data => console.log("Response:", data))
     .then(data => console.log(data))
     .catch(error => console.error(error));
-    }
+
+    setTimeout(()=>{
+        location.reload();
+    }, 1000);
+    });
     
 </script>
 </html>
